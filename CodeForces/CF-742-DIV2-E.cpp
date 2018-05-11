@@ -1,3 +1,22 @@
+/*
+        Author: Arvind Ramaswami
+
+        I noticed that the number of couples in odd chairs is equal to the number
+        of couples in even chairs, so I tried to find a construction for
+        the food in each chair (starting from food 1 for odd chairs and food 2 for even chairs),
+        but wasn't able to find one.
+
+        Instead, I used the solution in the editorial, which involved drawing an edge from
+        2 * i to 2 * i + 1 for each i and from each bf to gf, creating a graph without
+        any odd cycles, allowing it to be transformed into a bipartite graph.
+
+        If each side of the bipartite graph is given a food item, the conditions are
+        satisfied. Each boy has a girlfriend in the other side of the bipartite graph, and
+        for every person, there is an adjacent person in the other side of the bipartite graph.
+
+        Wrong answer on test case 13
+*/
+
 #include <bits/stdc++.h>
 
 using namespace std;
