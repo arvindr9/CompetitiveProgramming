@@ -14,8 +14,10 @@
         satisfied. Each boy has a girlfriend in the other side of the bipartite graph, and
         for every person, there is an adjacent person in the other side of the bipartite graph.
 
-        Wrong answer on test case 13
+        I kept getting wrong answer on test case 13 since I had accidentally set the size of the gf array to maxn instead
+        of 2 * maxn.
 */
+
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -23,21 +25,11 @@ using namespace std;
 const int maxn = 100010;
 int arr[2 * maxn];
 int food[2 * maxn];
-int gf[maxn];
-set<int> adj[2 * maxn];
+int gf[2 * maxn];
+vector<int> adj[2 * maxn];
 set<int> unprocessed;
 vector<int> boys;
 int n;
-
-void dfs(int currPerson, int f) {
-    food[currPerson] = f;
-    unprocessed.erase(currPerson);
-    for (int person: adj[currPerson]) {
-        if(!food[person]) {
-            dfs(person, f ^ 3);
-        }
-    }
-}
 
 int main() {
     ios::sync_with_stdio(0);
@@ -47,18 +39,32 @@ int main() {
         unprocessed.insert(i);
     }
     for (int i = 1; i <= n; i++) {
-        adj[2 * i].insert((2 * i + 1) % (2 * n));
-        adj[(2 * i + 1) % (2 * n)].insert(2 * i);
+        adj[2 * i].push_back((2 * i + 1) % (2 * n));
+        adj[(2 * i + 1) % (2 * n)].push_back(2 * i);
         int b, g;
         cin >> b >> g;
-        adj[b].insert(g);
-        adj[g].insert(b);
+        adj[b].push_back(g);
+        adj[g].push_back(b);
         gf[b] = g;
         boys.push_back(b);
     }
     while (unprocessed.size()) {
+        int currFood = 1;
         int currPerson = (*unprocessed.begin());
-        dfs(currPerson, 1);
+        queue<int> q;
+        q.push(currPerson);
+        food[currPerson] = currFood;
+        while (!q.empty()) {
+            currPerson = q.front(); q.pop();
+            unprocessed.erase(currPerson);
+            currFood = (food[currPerson] == 1) ? 2 : 1;
+            for (int person: adj[currPerson]) {
+                if (food[person] == 0) {
+                    q.push(person);
+                    food[person] = currFood;
+                }
+            }
+        }
     }
     for (int boy: boys) {
         cout << food[boy] << " " << food[gf[boy]] << "\n";
