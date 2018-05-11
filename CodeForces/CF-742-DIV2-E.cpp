@@ -7,7 +7,7 @@
         but wasn't able to find one.
 
         Instead, I used the solution in the editorial, which involved drawing an edge from
-        2 * i to 2 * i - 1 for each i and from each bf to gf, creating a graph without
+        2 * i to 2 * i + 1 for each i and from each bf to gf, creating a graph without
         any odd cycles, allowing it to be transformed into a bipartite graph.
 
         If each side of the bipartite graph is given a food item, the conditions are
