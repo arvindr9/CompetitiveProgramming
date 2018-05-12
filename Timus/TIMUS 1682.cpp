@@ -1,3 +1,20 @@
+/*
+    Author: Arvind Ramaswami
+
+    Note that once the first 2k + 1 integers are written, there is a cycle (k - 1 -- 2k - 1 -- 2k + 1).
+    Thus, the answer is upper bounded by 2k + 1, and we only need to consider the cycles formed
+    by the first 2k + 1 numbers.
+
+    For every pair (a, b) such that there is an edge from a to b, we either have a = -b^2 mod k or
+    b = -a^2 mod k. Let's consider the pairs (a, b) where a and b are between 1 and 2k + 1 inclusive.
+    These can all be formed by considering each number a from 1 to 2k + 1 and finding -a&2 mod k to use for
+    b. We now want to find the minimum possible value of the largest node in a cycle
+    
+    The edge set needs to be modified such that a > b for all (a, b) and then sorted in increasing order
+    according to a. Then, add each edge in sequential to a dsu structure until there exists a pair (a, b)
+    that cannot be added. Then, return that value for a as the answer.
+*/
+
 #include <iostream>
 #include <set>
 
