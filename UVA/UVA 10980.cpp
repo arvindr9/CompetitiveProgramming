@@ -37,7 +37,7 @@ inline void createKnapsack() { //O(KM)
         } else if (knapsack[qty[i]] == 0) {
             knapsack[qty[i]] = prices[i];
         }
-    } //uncommenting ln 25-33 and commenting ln 34 - 43 gives a valid solution
+    } //uncommenting ln 41-49 and commenting ln 50 - 59 gives a valid solution
     // for (int i = 1; i <= m + 1; i++) {
     //     for (int j = 1; j < maxk; j++) {
     //         if (knapsack[j] && j + qty[i] < maxk) {
