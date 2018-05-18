@@ -3,7 +3,7 @@
 
     -Solution: The number of bad moves is independent of when left/right moves are made compared to up/down moves,
     so we can consider the left/right and up/down moves separately. This solution uses dynamic programming to
-    memoize the number of future skipped steps will occur given that the robot is currently at a certain border and i steps
+    memoize the number of future skipped steps that will occur given that the robot is currently at a certain border and i steps
     have already been processed.
     
     Then, the algorithm iterates through all the possible start locations (R + C total since we are considering the horizontal
