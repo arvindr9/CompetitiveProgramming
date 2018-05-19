@@ -1,8 +1,22 @@
+/*
+    -Author: Arvind Ramaswami
+
+    Solution: Preprocess the index of the kth instance of each element after each index i.
+    Let dp[index][mask][length] the maximum number of elements that can be appended to give the desired sequence,
+    where each digit of mask represents whether that card is part of the subsequence.
+    Then, for each unvisited element u,
+    we have the recurrence dp[index][mask][length] = max(dp[index + u][mask with u][length], dp[index + u][mask with u][length + 1])
+    since we are allowed to include (length) or (length + 1) of any unvisited element to the subsequence.
+
+    The desired answer will be max_l (dp[0][0][l]).
+
+    Complexity: O(n^2 * 2^8)
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
 
-int dp[1003][256][130];
+int dp[1003][256][130]; //dp[index][mask][length] the maximum number of elements that can be appended to give the desired sequence.
 int nxt[1003][9][130]; //next[index][elt][k] = index of k_th occurrence of elt after index
 int arr[1003];
 map<int, vector<int>> indices;
