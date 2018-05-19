@@ -41,6 +41,14 @@ inline int solve(int i, int mask) {
         return 0;
     }
     int res = 0;
+    if (arr[i + 1] != 2) {
+        if (mask % 4 == 0) {
+            res += solve(i + 1, mask + 4);
+        } else {
+            res += solve(i + 1, 4);
+        }
+    }
+    
     if (arr[i + 1] == 0) {
         res += solve(i + 1, mask + 2);
         res %= mod;
@@ -75,6 +83,7 @@ int main() {
         numZeros[i] = numZeros[i+1];
         if (arr[i + 1] == 0) {
             numZeros[i] <<= 1;
+            numZeros[i] %= mod;
         }
     }
     int ans = solve(0, 0);
