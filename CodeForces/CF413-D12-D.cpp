@@ -31,62 +31,46 @@ int numZeros[maxn];
 int n, k;
 
 inline int solve(int i, int mask) {
-    if (dp[i][mask]) {
-        return dp[i][mask];
-    }
     if (mask == (1 << k)) {
-        return (numZeros[i] % mod);
+        return numZeros[i];
     }
     if (i == n) {
         return 0;
     }
+    if (~dp[i][mask]) {
+        return dp[i][mask];
+    }
     int res = 0;
-    if (arr[i + 1] != 2) {
-        if (mask % 4 == 0) {
-            res += solve(i + 1, mask + 4);
-        } else {
-            res += solve(i + 1, 4);
-        }
-    }
-    
-    if (arr[i + 1] == 0) {
+    if (arr[i] != 4) {
         res += solve(i + 1, mask + 2);
-        res %= mod;
-        if (mask % 4 == 0) {
-            res += solve(i + 1, mask + 4);
-        } else {
-            res += solve(i + 1, 4);
-        }
     }
-    else {
-        if (mask % arr[i + 1] == 0) {
-            res += solve(i + 1, mask + arr[i + 1]);
+    if (arr[i] != 2) {
+        if (mask % 4 == 2) {
+            res += solve(i + 1, 4);
         } else {
-            res += solve(i + 1, arr[i + 1]);
+            res += solve(i + 1, mask + 4);
         }
     }
     res %= mod;
-    dp[i][mask] = res;
-    return res;
+    return dp[i][mask] = res;
 }
 
 
 int main() {
     ios::sync_with_stdio(0);
     cin.tie(0);
+    memset(dp, -1, sizeof(dp));
     cin >> n >> k;
-    for (int i = 1; i <= n; i++) {
+    for (int i = 0; i < n; i++) {
         cin >> arr[i];
     }
     numZeros[n] = 1;
     for (int i = n - 1; i >= 0; i--) {
         numZeros[i] = numZeros[i+1];
-        if (arr[i + 1] == 0) {
-            numZeros[i] <<= 1;
-            numZeros[i] %= mod;
+        if (arr[i] == 0) {
+            numZeros[i] = (numZeros[i] << 1) % mod;
         }
     }
-    int ans = solve(0, 0);
-    cout << ans << "\n";
+    cout << solve(0, 0) << "\n";
 
 }
