@@ -21,58 +21,44 @@
 using namespace std;
 
 const int maxn = 2005;
-const int maxk = 12;
+const int maxk = 11;
 const int mod = 1000000007;
 
-int dp[maxn][1<<maxk][2];
+int dp[maxn][1<<maxk + 1]; //number of ways to choose a valid sequence given that i steps have occurred and the decreasing subsequence has a bitmask j
 int arr[maxn];
 int numZeros[maxn];
 
 int n, k;
 
-inline int solve(int i, int mask, int visited) {
-    if (i == n) {
-        return visited;
+inline int solve(int i, int mask) {
+    if (dp[i][mask]) {
+        return dp[i][mask];
     }
-    if (visited) {
+    if (mask == (1 << k)) {
         return (numZeros[i] % mod);
     }
-    if (dp[i][mask][visited]) {
-        return dp[i][mask][visited];
+    if (i == n) {
+        return 0;
     }
     int res = 0;
-    int visited2 = visited;
     if (arr[i + 1] == 0) {
-        if (mask % 2 == 0) {
-            if (mask + 2 >= (1 << k)) {
-                visited2 = 1;
-            }
-            res += solve(i + 1, mask + 2, visited2);
-        } else {
-            res += solve(i + 1, 2, visited);
-        }
+        res += solve(i + 1, mask + 2);
         res %= mod;
         if (mask % 4 == 0) {
-            if (mask + 4 >= (1 << k)) {
-                visited2 = 1;
-            }
-            res += solve(i + 1, mask + 4, visited2);
+            res += solve(i + 1, mask + 4);
         } else {
-            res += solve(i + 1, 4, visited);
+            res += solve(i + 1, 4);
         }
     }
     else {
         if (mask % arr[i + 1] == 0) {
-            if (mask + arr[i + 1] >= (1 << k)) {
-                visited2 = 1;
-            }
-            res += solve(i + 1, mask + arr[i + 1], visited2);
+            res += solve(i + 1, mask + arr[i + 1]);
         } else {
-            res += solve(i + 1, arr[i + 1], visited);
+            res += solve(i + 1, arr[i + 1]);
         }
     }
     res %= mod;
-    dp[i][mask][visited] = res;
+    dp[i][mask] = res;
     return res;
 }
 
@@ -91,7 +77,7 @@ int main() {
             numZeros[i] <<= 1;
         }
     }
-    int ans = solve(0, 0, 0);
+    int ans = solve(0, 0);
     cout << ans << "\n";
 
 }
