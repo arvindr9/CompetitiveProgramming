@@ -1,4 +1,4 @@
-/*
+ /*
     -Author: Arvind Ramaswami
 
     Solution: After each step i, we must keep track of the longest decreasing suffix.
@@ -24,35 +24,46 @@ const int maxn = 2005;
 const int maxk = 11;
 const int mod = 1000000007;
 
-int dp[maxn][1<<maxk + 1]; //number of ways to choose a valid sequence given that i steps have occurred and the decreasing subsequence has a bitmask j
+int dp[maxn][1<<maxk + 1];
 int arr[maxn];
 int numZeros[maxn];
 
 int n, k;
 
 inline int solve(int i, int mask) {
+    if (~dp[i][mask]) {
+        return dp[i][mask];
+    }
     if (mask == (1 << k)) {
-        return numZeros[i];
+        return (numZeros[i] % mod);
     }
     if (i == n) {
         return 0;
     }
-    if (~dp[i][mask]) {
-        return dp[i][mask];
-    }
     int res = 0;
-    if (arr[i] != 4) {
-        res += solve(i + 1, mask + 2);
-    }
-    if (arr[i] != 2) {
-        if (mask % 4 == 2) {
-            res += solve(i + 1, 4);
+    if (arr[i + 1] == 0) {
+        if (mask % 2 == 0) {
+            res += solve(i + 1, mask + 2);
         } else {
+            res += solve(i + 1, 2);
+        }
+        res %= mod;
+        if (mask % 4 == 0) {
             res += solve(i + 1, mask + 4);
+        } else {
+            res += solve(i + 1, 4);
+        }
+    }
+    else {
+        if (mask % arr[i + 1] == 0) {
+            res += solve(i + 1, mask + arr[i + 1]);
+        } else {
+            res += solve(i + 1, arr[i + 1]);
         }
     }
     res %= mod;
-    return dp[i][mask] = res;
+    dp[i][mask] = res;
+    return res;
 }
 
 
@@ -61,16 +72,18 @@ int main() {
     cin.tie(0);
     memset(dp, -1, sizeof(dp));
     cin >> n >> k;
-    for (int i = 0; i < n; i++) {
+    for (int i = 1; i <= n; i++) {
         cin >> arr[i];
     }
     numZeros[n] = 1;
     for (int i = n - 1; i >= 0; i--) {
         numZeros[i] = numZeros[i+1];
-        if (arr[i] == 0) {
-            numZeros[i] = (numZeros[i] << 1) % mod;
+        if (arr[i + 1] == 0) {
+            numZeros[i] <<= 1;
+            numZeros[i] %= mod;
         }
     }
-    cout << solve(0, 0) << "\n";
+    int ans = solve(0, 0);
+    cout << ans << "\n";
 
 }
