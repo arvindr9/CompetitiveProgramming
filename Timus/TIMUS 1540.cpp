@@ -10,7 +10,7 @@
     Otherwise, if the grundy number is some positive k,
     Gandalf wins. If Gandalf wins, we must test the deletion of each number from
     each chain. Let the original grundy number of the chain be n. If there exists a number m
-    from the chain such that n ^ m = k, then Gandalf must remove m from that chain (since this will
+    from the chain such that grundy(n with m removed) = grundy(n) ^ k, then Gandalf must remove m from that chain (since this will
     result in a grundy number of zero).
 */
 
