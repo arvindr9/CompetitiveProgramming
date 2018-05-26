@@ -7,13 +7,6 @@ class LittleSquares {
     int grundy[1030][1030];
     int n;
 
-    void print(set<int> &s) {
-        for (int i : s) {
-            cout << i << " ";
-        }
-        cout << "\n";
-    }
-
     inline int mex(set<int> &s) {
         for (int i = 0; i <= 10000; i++) {
             if (!s.count(i)) return i;
