@@ -7,7 +7,7 @@ class LittleSquares {
     int grundy[1030][1030];
     int n;
 
-    inline int mex(vector<int> grundys) {
+    inline int mex(vector<int> &grundys) {
         for (int i = 0; i < 22; i++) {
             if (!grundys[i]) return i;
         }
