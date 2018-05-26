@@ -5,10 +5,9 @@ using namespace std;
 class LittleSquares {
 
     int grundy[1030][1030];
-    int grundys[22];
     int n;
 
-    inline int mex() {
+    inline int mex(vector<int> grundys) {
         for (int i = 0; i < 22; i++) {
             if (!grundys[i]) return i;
         }
@@ -17,6 +16,7 @@ class LittleSquares {
 
     int solve(int top, int bottom, int n) {
         if (~grundy[top][bottom]) return grundy[top][bottom];
+        vector<int> grundys(22);
         for (int i = 0; i < n; i++) {
             if (!(top & (1 << i) ) ) { //i'th square not filled
                 grundys[ solve(top | (1 << i), bottom, n ) ] = 1;
@@ -27,8 +27,7 @@ class LittleSquares {
                 }
             }
         }
-        grundy[top][bottom] = mex();
-        memset(grundys, 0, sizeof(grundys));
+        grundy[top][bottom] = mex(grundys);
         return grundy[top][bottom];
     }
 
