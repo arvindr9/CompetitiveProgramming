@@ -1,3 +1,17 @@
+/*
+    -Author: Arvind Ramaswami
+
+    Solution: Since we are only allowed to add 1x1 and 2x2 squares such that their top-left corner is on en even-numbered
+    row (rows indexed from zero) and there are an even number of rows, each subsequent group of two rows from top to bottom can be considered
+    separately. The desired grundy number will be the xors of the grundy numbers all these groups of two.
+
+    To represent the grundy number of two rows, we can have grundy[a][b], where the ith bit in a determines if the i^{th}
+    element (indexing from zero) in the top row is colored, and the ith bit in b determines the same for the bottom row.
+    The grundy number of the configuration (a, b) can be found by considering the possibilities for squares to be colored,
+    and after taking the xors of all the grundy numbers in the grid, we immediately have our answer ("first" if the
+    number is greater than zero and "second" if the number is zero).
+*/
+
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -5,7 +19,6 @@ using namespace std;
 class LittleSquares {
 
     int grundy[1030][1030];
-    int n;
 
     inline int mex(vector<int> &grundys) {
         for (int i = 0; i < 22; i++) {
