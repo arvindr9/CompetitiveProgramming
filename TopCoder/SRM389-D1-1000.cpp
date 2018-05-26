@@ -10,14 +10,13 @@ class LittleSquares {
 
     inline int mex() {
         for (int i = 0; i < 4; i++) {
-            if (!s.count(i)) return i;
+            if (!grundys[i]) return i;
         }
         return 10;
     }
 
     int solve(int top, int bottom, int n) {
         if (~grundy[top][bottom]) return grundy[top][bottom];
-        set<int> grundys;
         for (int i = 0; i < n; i++) {
             if (!(top & (1 << i) ) ) { //i'th square not filled
                 grundys[ solve(top | (1 << i), bottom, n ) ] = 1;
