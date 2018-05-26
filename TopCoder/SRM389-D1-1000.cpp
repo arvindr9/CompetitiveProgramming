@@ -5,13 +5,14 @@ using namespace std;
 class LittleSquares {
 
     int grundy[1030][1030];
+    int grundys[4];
     int n;
 
-    inline int mex(set<int> &s) {
-        for (int i = 0; i <= 10000; i++) {
+    inline int mex() {
+        for (int i = 0; i < 4; i++) {
             if (!s.count(i)) return i;
         }
-        return 20000;
+        return 10;
     }
 
     int solve(int top, int bottom, int n) {
@@ -19,15 +20,16 @@ class LittleSquares {
         set<int> grundys;
         for (int i = 0; i < n; i++) {
             if (!(top & (1 << i) ) ) { //i'th square not filled
-                grundys.insert( solve(top | (1 << i), bottom, n ));
+                grundys[ solve(top | (1 << i), bottom, n ) ] = 1;
                 if (i < n - 1) {
                     if (!(bottom & (1 << i) ) && !(top & (1 << (i + 1)) ) && !(bottom & (1 << (1 + i)) ) ) {
-                        grundys.insert( solve(top | ((1 << i) + (1 << (i + 1))), bottom | ((1 << i) + (1 << (i + 1))), n ));
+                        grundys[ solve(top | ((1 << i) + (1 << (i + 1))), bottom | ((1 << i) + (1 << (i + 1))), n ) ] = 1;
                     }
                 }
             }
         }
-        grundy[top][bottom] = mex(grundys);
+        grundy[top][bottom] = mex();
+        memset(grundys, 0, sizeof(grundys));
         return grundy[top][bottom];
     }
 
