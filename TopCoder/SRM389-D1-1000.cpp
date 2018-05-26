@@ -5,14 +5,14 @@ using namespace std;
 class LittleSquares {
 
     int grundy[1030][1030];
-    int grundys[4];
+    int grundys[22];
     int n;
 
     inline int mex() {
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 22; i++) {
             if (!grundys[i]) return i;
         }
-        return 10;
+        return 22;
     }
 
     int solve(int top, int bottom, int n) {
