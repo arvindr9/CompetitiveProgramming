@@ -7,7 +7,8 @@
     However, a and 10^n are not necessarily coprime, so we must modify our mod function.
 
     We have a function newmod such that newmod(a, b) is a if a < b or otherwise b + a % b.
-    Applying the above formula but replacing mod with newmod is sufficient.
+    
+    Applying the above formula but replacing mod with newmod is sufficient. Here is why:
     
     We want to find a^x mod m.
     Consider a maximal power of an arbitrary prime factor p that divides m (p ^ n).
@@ -16,6 +17,9 @@
     and otherwise there are two cases:
     1) gcd(a, m) == 1: phi(p^n) | phi(m), so a^x = a^ (x mod phi(m)) mod p^n = a^(newmod(x, m)) mod p^n
     2) gcd(a, m) > 1: both sides will be zero
+    
+    The prime p was chosen arbitrarily, so by the Chinese Remainder Theorem, we have the unique solution to the modular
+    congruence a^x = a^newmod(x, phi(m)) mod m.
 
 */
 
