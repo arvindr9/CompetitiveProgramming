@@ -13,9 +13,9 @@
     We want to find a^x mod m.
     Consider a maximal power of an arbitrary prime factor p that divides m (p ^ n).
     We have a^x = a^newmod(x, phi(m)) mod p^n
-    since if x < phi(n), the right side will equal a^x,
+    since if x < phi(m), the right side will equal a^x,
     and otherwise there are two cases:
-    1) gcd(a, m) == 1: phi(p^n) | phi(m), so a^x = a^ (x mod phi(m)) mod p^n = a^(newmod(x, m)) mod p^n
+    1) gcd(a, m) == 1: phi(p^n) | phi(m), so a^x = a^ (x mod phi(m)) mod p^n = a^(newmod(x, phi(m))) mod p^n
     2) gcd(a, m) > 1: both sides will be zero
     
     The prime p was chosen arbitrarily, so by the Chinese Remainder Theorem, we have the unique solution to the modular
