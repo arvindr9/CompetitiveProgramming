@@ -2,8 +2,9 @@
     Author: Arvind Ramaswami
     Solution: We use grundy numbers. Adding a triomino splits the board into two subgames (where
     some subgames could potentially have no space for remaining tiles), for which the grundy numbers can
-    be found recursively with dp (the dp array is explained below). The final answer is the mex of the
-    xors of the grundy values two subgames over all possible splits. 
+    be found recursively with dp (the dp array is explained below). The grundy number of a
+    subgame is the mex of the xors of the grundy values of the two resulting subgames
+    over all possible splits. 
 */
 
 #include <bits/stdc++.h>
