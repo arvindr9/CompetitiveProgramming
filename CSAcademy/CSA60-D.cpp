@@ -20,7 +20,7 @@
 
     I created a knapsack type data structure that I named knap_tree.
     Each path from the root to a node represents a subset that is added,
-    and for each node, attributes like the sum of , card index that creates the node,
+    and for each node, attributes like the sum of the path from the root to the node, card index that creates the node,
     and depth are kept track of.
     For a knap_tree, sdn_map stores the possible depths (and its associated node) for a sum.
 
